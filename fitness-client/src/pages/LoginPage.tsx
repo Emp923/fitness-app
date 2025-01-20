@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
+import "./LoginPage.css";
 
 const LoginPage = () => {
   const [username, setUsername] = useState<string>("");
@@ -16,28 +17,34 @@ const LoginPage = () => {
   };
 
   return (
-    <>
-      <h1>Sign In</h1>
+    <div id="login">
       <form onSubmit={handleSubmit}>
-        <label>Username: </label>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <label>Password: </label>
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Sign In</button>
+        <h1>Please Sign In</h1>
+        <div className="form-input-group">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            required
+            autoFocus
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="form-input-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button type="submit">Sign in</button>
+        <p>
+          Need an account? <Link to="/register">Sign Up!</Link>
+        </p>
       </form>
-
-      <p>New Customer? <Link to="/register">Register</Link></p>
-    </>
+    </div>
   );
 };
 

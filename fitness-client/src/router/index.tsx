@@ -2,10 +2,12 @@ import { createBrowserRouter, createRoutesFromElements, Route } from "react-rout
 import App from "../App";
 import HomePage from "../pages/HomePage";
 import PrivateRoute from "../components/PrivateRoute";
+import LoginPage from "../pages/LoginPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="" element={<App />}>
+      <Route path="/login" element={<LoginPage />} />
       <Route path="" element={<PrivateRoute />}>
         <Route path="/" element={<HomePage />} />
       </Route>
