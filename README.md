@@ -16,6 +16,3 @@ add-ons such as a family membership, kids activities, or group classes.
 | Back-End        | Java / Spring-Boot         |
 | Front-End       | React / TypeScript         |
 | Third-Party API | API Ninjas - Exercises API |
-
-
-this is a test
