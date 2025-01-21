@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 import "./LoginPage.css";
+import { login } from "../services/authService";
 
 const LoginPage = () => {
   const [username, setUsername] = useState<string>("");
@@ -10,7 +11,9 @@ const LoginPage = () => {
     event.preventDefault();
     try {
       // process form data
-      console.log({ username, password });
+      const credentials = { username, password };
+      const data = await login(credentials);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
