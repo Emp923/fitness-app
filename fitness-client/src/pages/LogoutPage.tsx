@@ -1,13 +1,15 @@
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../slices/authSlice";
 
 const LogoutPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // TODO: logout logic goes here
+    dispatch(logout({}));
 
-    console.log('you have been logged out');
     navigate("/login");
   }, []);
 
