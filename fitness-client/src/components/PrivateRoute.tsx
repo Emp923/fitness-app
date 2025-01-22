@@ -3,7 +3,6 @@ import { Navigate, Outlet } from "react-router-dom";
 import { RootState } from "../store";
 
 const PrivateRoute = () => {
-  // TODO: check for auth state
   const { userInfo } = useSelector((state: RootState) => state.auth);
   return userInfo ? <Outlet /> : <Navigate to="/login" replace />;
 };
