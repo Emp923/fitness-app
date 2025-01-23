@@ -1,19 +1,25 @@
 import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
+import { register } from "../services/authService";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-  const handleSubmit = (event: FormEvent) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
       if (password !== confirmPassword) {
         throw Error("Password error");
       }
-      console.log({ username, password });
+      const res = await register({ username, password, confirmPassword });
+      if (res.status === 201) {
+        navigate("/login");
+      }
     } catch (error) {
       console.log(error);
     }
