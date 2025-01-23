@@ -9,6 +9,7 @@ import { RootState } from "../store";
 const LoginPage = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loginError, setLoginError] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,11 +27,18 @@ const LoginPage = () => {
     try {
       // process form data
       const credentials = { username, password };
-      const data = await login(credentials);
-      dispatch(setCredentials({ ...data }));
-      navigate("/");
+      const response = await login(credentials);
+      if (response.status === 200) {
+        const data = await response.json();
+        dispatch(setCredentials({ ...data }));
+        setLoginError(false);
+        navigate("/");
+      } else {
+        throw Error("Invalid credentials");
+      }
     } catch (error) {
       console.log(error);
+      setLoginError(true);
     }
   };
 
@@ -38,6 +46,7 @@ const LoginPage = () => {
     <div id="login">
       <form onSubmit={handleSubmit}>
         <h1>Please Sign In</h1>
+        {loginError ? <p style={{ color: 'red' }}>Invalid Credentials</p> : null}
         <div className="form-input-group">
           <label htmlFor="username">Username</label>
           <input

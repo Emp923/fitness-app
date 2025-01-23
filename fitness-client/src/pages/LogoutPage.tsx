@@ -8,7 +8,7 @@ const LogoutPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(logout({}));
+    dispatch(logout());
 
     navigate("/login");
   }, []);
