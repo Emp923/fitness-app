@@ -13,6 +13,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
+      '/exercises': {
+        target: 'https://api.api-ninjas.com/v1/exercises',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/exercises/, ''),
+      },
     },
   },
 })

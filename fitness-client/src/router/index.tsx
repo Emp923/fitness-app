@@ -5,6 +5,7 @@ import PrivateRoute from "../components/PrivateRoute";
 import LoginPage from "../pages/LoginPage";
 import LogoutPage from "../pages/LogoutPage";
 import RegisterPage from "../pages/RegisterPage";
+import SearchExercises from "../components/SearchExercises";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -12,6 +13,7 @@ const router = createBrowserRouter(
       <Route path="/login" element={<LoginPage />} />
       <Route path="/logout" element={<LogoutPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/search" element={<SearchExercises />} />
       <Route path="" element={<PrivateRoute />}>
         <Route path="/" element={<HomePage />} />
       </Route>
