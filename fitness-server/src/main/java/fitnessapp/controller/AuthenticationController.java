@@ -6,12 +6,15 @@ import fitnessapp.model.LoginDto;
 import fitnessapp.model.LoginResponseDto;
 import fitnessapp.model.RegisterUserDto;
 import fitnessapp.model.User;
+import fitnessapp.security.SecurityUtils;
 import fitnessapp.security.jwt.JWTFilter;
 import fitnessapp.security.jwt.TokenProvider;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -74,6 +77,18 @@ public class AuthenticationController {
         catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User registration failed.");
         }
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @RequestMapping(path = "/testing", method = RequestMethod.GET)
+    public String testing(HttpServletRequest request) {
+        String username = SecurityUtils.getCurrentUsername();
+
+        if (username.equals("admin")) {
+            return "Admin";
+        }
+
+        return "standard user";
     }
 
 }
