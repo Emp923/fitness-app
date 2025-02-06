@@ -15,6 +15,13 @@ export const register = async (newUserCredentials: {
   username: string,
   password: string,
   confirmPassword: string,
+  preferredName: string,
+  availability: string[],
+  birthday: Date | null,
+  gender: string,
+  restrictions?: string,
+  goals?: string[],
+  comments?: string,
   role?: string
 }) => {
   newUserCredentials.role = "ROLE_USER";
