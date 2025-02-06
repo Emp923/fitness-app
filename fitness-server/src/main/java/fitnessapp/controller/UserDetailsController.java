@@ -21,10 +21,11 @@ public class UserDetailsController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "", method = RequestMethod.POST)
-    public void createUserDetails(@Valid @RequestBody UserDetails userDetails) {
+    public UserDetails createUserDetails(@Valid @RequestBody UserDetails userDetails) {
 
         try{
             UserDetails createdUserDetails = userDetailsDao.createUserDetails(userDetails);
+            return createdUserDetails;
         } catch (DaoException e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }

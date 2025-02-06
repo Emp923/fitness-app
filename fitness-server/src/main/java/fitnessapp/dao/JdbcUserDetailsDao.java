@@ -23,7 +23,7 @@ public class JdbcUserDetailsDao implements UserDetailsDao {
     public UserDetails getUserById(int userId) {
         UserDetails user = null;
         String sql = "SELECT user_id, preferred_name, availability, birthday, gender, restrictions, goals, comments" +
-                " FROM users_details WHERE user_id = ?";
+                " FROM user_details WHERE user_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             if (results.next()) {
@@ -43,7 +43,6 @@ public class JdbcUserDetailsDao implements UserDetailsDao {
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?)" +
                 " RETURNING user_id";
 
-        System.out.println(userDetails.toString());
         try {
             int newUserDetailsId = jdbcTemplate.queryForObject(sql, int.class, userDetails.getUserId(), userDetails.getPreferredName(), userDetails.getAvailability(), Date.valueOf(userDetails.getBirthday()),
                     userDetails.getGender(), userDetails.getRestrictions(), userDetails.getGoals(), userDetails.getComments());
@@ -62,11 +61,8 @@ public class JdbcUserDetailsDao implements UserDetailsDao {
         UserDetails userDetails = new UserDetails();
         userDetails.setUserId(rs.getInt("user_id"));
         userDetails.setPreferredName(rs.getString("preferred_name"));
-        userDetails.setAvailability((rs.getString("availability")));
-
-        Date sqlDate = rs.getDate("birthday");
-        userDetails.setBirthday(sqlDate.toLocalDate());
-
+        userDetails.setAvailability(rs.getString("availability"));
+        userDetails.setBirthday(rs.getString("birthday"));
         userDetails.setGender(rs.getString("gender"));
         userDetails.setRestrictions(rs.getString("restrictions"));
         userDetails.setGoals(rs.getString("goals"));

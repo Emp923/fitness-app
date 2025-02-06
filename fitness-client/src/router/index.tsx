@@ -6,6 +6,7 @@ import LoginPage from "../pages/LoginPage";
 import LogoutPage from "../pages/LogoutPage";
 import RegisterPage from "../pages/RegisterPage";
 import SearchExercises from "../components/SearchExercises";
+import UserDetails from "../pages/UserDetails";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
       <Route path="/search" element={<SearchExercises />} />
       <Route path="" element={<PrivateRoute />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/user-details" element={<UserDetails />}/>
       </Route>
     </Route>
   )

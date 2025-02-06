@@ -7,7 +7,7 @@ public class UserDetails {
     private int userId;
     private String preferredName;
     private String availability;
-    private LocalDate birthday;
+    private String birthday;
     private String gender;
     private String restrictions;
     private String goals;
@@ -41,11 +41,11 @@ public class UserDetails {
         this.availability = availability;
     }
 
-    public LocalDate getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -81,7 +81,7 @@ public class UserDetails {
         this.comments = comments;
     }
 
-    public UserDetails(int userId, String preferredName, String availability, LocalDate birthday, String gender, String restrictions, String goals, String comments) {
+    public UserDetails(int userId, String preferredName, String availability, String birthday, String gender, String restrictions, String goals, String comments) {
         this.userId = userId;
         this.preferredName = preferredName;
         this.availability = availability;

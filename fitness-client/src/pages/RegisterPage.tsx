@@ -48,7 +48,7 @@ const RegisterPage = () => {
     "Strength",
     "Stretching",
     "Powerlifting"
-  ]
+  ];
 
   const handleDayCheckboxChange = (day: string) => {
     setAvailability((prevAvailability) =>
