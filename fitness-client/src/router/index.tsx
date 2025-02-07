@@ -20,9 +20,9 @@ const router = createBrowserRouter(
       <Route path="" element={<PrivateRoute />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/user-details" element={<UserDetails />}/>
-      </Route>
-      <Route path="/admin" element={<AdminRoute />}>
-        <Route path="" element={<AdminPage />} />
+        <Route path="/admin" element={<AdminRoute />}>
+          <Route path="" element={<AdminPage />} />
+        </Route>
       </Route>
     </Route>
   )
