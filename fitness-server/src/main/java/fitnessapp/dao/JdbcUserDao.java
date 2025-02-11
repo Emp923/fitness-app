@@ -2,6 +2,7 @@ package fitnessapp.dao;
 
 import fitnessapp.exception.DaoException;
 import fitnessapp.model.RegisterUserDto;
+import fitnessapp.model.UpdateUserRoleDto;
 import fitnessapp.model.User;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -85,6 +86,18 @@ public class JdbcUserDao implements UserDao {
             throw new DaoException("Data integrity violation", e);
         }
         return newUser;
+    }
+
+    @Override
+    public void updateUserRole(int id, UpdateUserRoleDto userRoleDto) {
+        String updateUserSql = "UPDATE users SET role = ? WHERE user_id = ?";
+        try {
+            jdbcTemplate.update(updateUserSql, userRoleDto.getRole().toUpperCase(), id);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
     }
 
     private User mapRowToUser(SqlRowSet rs) {
