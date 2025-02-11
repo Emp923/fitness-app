@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./LoginPage.css";
+import "./UserDetailsPage.css";
 import { userDetailsSubmit } from "../services/userDetailsService";
 import { formatDate } from "../utils.ts";
 
@@ -18,7 +18,7 @@ const UserDetails = () => {
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         const formData = {
-            userId: 4,
+            userId: 6,
             preferredName,
             availability: availability.toString(),
             birthday: formatDate(birthday?.toString()),
@@ -52,9 +52,13 @@ const UserDetails = () => {
 
     const goalsList = [
         "Cardio",
+        "Olympic Weightlifting",
+        "Plyometrics",
+        "Powerlifting",
         "Strength",
         "Stretching",
-        "Powerlifting"
+        "Strongman"
+        
     ];
 
     const handleDayCheckboxChange = (day: string) => {
@@ -162,8 +166,7 @@ const UserDetails = () => {
                         onChange={(e) => setComment(e.target.value)}
                     />
                 </div>
-                <button type="submit">Create Account</button>
-                <p>Already have an account? <Link to="/login">Log In</Link></p>
+                <button type="submit">Save Details</button>
             </form>
         </div>
     );
