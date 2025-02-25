@@ -7,6 +7,7 @@ import LogoutPage from "../pages/LogoutPage";
 import RegisterPage from "../pages/RegisterPage";
 import SearchExercises from "../components/SearchExercises";
 import UserDetails from "../pages/UserDetails";
+import TrainersPage from "../pages/TrainersPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
       <Route path="" element={<PrivateRoute />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/user-details" element={<UserDetails />}/>
+        <Route path="/trainers" element={<TrainersPage/>}/>
       </Route>
     </Route>
   )
