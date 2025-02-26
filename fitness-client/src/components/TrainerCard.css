@@ -1,0 +1,47 @@
+.trainer-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+}
+
+.trainer-card {
+    max-width: calc(25% - 20px);
+    background-color: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.trainer-card img {
+    width: 80%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.trainer-card h2 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.trainer-card p {
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.trainer-card p strong {
+    color: #222;
+}
+
+.trainer-card .specialties,
+.trainer-card .certification {
+    text-align: left;
+    width: 100%;
+    font-size: 0.9rem;
+}
