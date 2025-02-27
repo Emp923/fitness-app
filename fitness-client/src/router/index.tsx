@@ -9,6 +9,7 @@ import SearchExercises from "../components/SearchExercises";
 import UserDetails from "../pages/UserDetails";
 import AdminPage from "../pages/AdminPage";
 import AdminRoute from "../components/AdminRoute";
+import TrainersPage from "../pages/TrainersPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,6 +24,7 @@ const router = createBrowserRouter(
         <Route path="/admin" element={<AdminRoute />}>
           <Route path="" element={<AdminPage />} />
         </Route>
+        <Route path="/trainers" element={<TrainersPage/>}/>
       </Route>
     </Route>
   )

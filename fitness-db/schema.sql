@@ -24,4 +24,17 @@ CREATE TABLE user_details (
     CONSTRAINT FK_user_details FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
+DROP TABLE IF EXISTS trainer_details CASCADE;
+
+CREATE TABLE trainer_details (
+    trainer_id INT PRIMARY KEY,
+    name varchar(200),
+    bio varchar(255),
+    specialty_one varchar(50),
+    specialty_two varchar(50),
+    certification varchar(50),
+    photograph varchar(50),
+    CONSTRAINT FK_trainer_details FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
 COMMIT TRANSACTION;
