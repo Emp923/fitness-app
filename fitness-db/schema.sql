@@ -27,7 +27,7 @@ CREATE TABLE user_details (
 DROP TABLE IF EXISTS trainer_details CASCADE;
 
 CREATE TABLE trainer_details (
-    trainer_id INT PRIMARY KEY,
+    user_id INT PRIMARY KEY,
     name varchar(200),
     bio varchar(255),
     specialty_one varchar(50),

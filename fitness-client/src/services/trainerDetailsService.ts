@@ -1,5 +1,5 @@
 export type Trainer = {
-    trainerId: number,
+    userId: number,
     name: string,
     bio: string,
     specialtyOne: string,
