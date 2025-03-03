@@ -27,7 +27,7 @@ const TrainersPage = () => {
             <h1>Available Trainers</h1>
             <div className="trainer-container">
             {trainers.map((trainer: Trainer) => (
-                <TrainerCard key={trainer.trainerId} trainer={trainer}/>
+                <TrainerCard key={trainer.userId} trainer={trainer}/>
             ))}
             </div>
         </>

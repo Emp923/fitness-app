@@ -23,7 +23,7 @@ public class JdbcTrainerDetailsDao implements TrainerDetailsDao{
     @Override
     public List<TrainerDetails> getTrainerDetails() {
         List<TrainerDetails> trainerDetails = new ArrayList<>();
-        String sql = "SELECT trainer_id, name, bio, specialty_one, specialty_two, certification, photograph" +
+        String sql = "SELECT user_id, name, bio, specialty_one, specialty_two, certification, photograph" +
                 " FROM trainer_details ORDER BY name ASC";
 
         try{
@@ -39,13 +39,13 @@ public class JdbcTrainerDetailsDao implements TrainerDetailsDao{
     }
 
     @Override
-    public TrainerDetails getTrainerById(int trainerId) {
+    public TrainerDetails getTrainerById(int userId) {
         TrainerDetails trainer = null;
-        String sql = "SELECT trainer_id, name, bio, specialty_one, specialty_two, certification, photograph" +
+        String sql = "SELECT user_id, name, bio, specialty_one, specialty_two, certification, photograph" +
                 " FROM trainer_details WHERE trainer_id = ?";
 
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, trainerId);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             if (results.next()) {
                 trainer = mapRowToTrainerDetails(results);
             }
@@ -57,7 +57,7 @@ public class JdbcTrainerDetailsDao implements TrainerDetailsDao{
 
     private TrainerDetails mapRowToTrainerDetails(SqlRowSet rs){
         TrainerDetails trainerDetails = new TrainerDetails();
-        trainerDetails.setTrainerId(rs.getInt("trainer_id"));
+        trainerDetails.setUserId(rs.getInt("user_id"));
         trainerDetails.setName(rs.getString("name"));
         trainerDetails.setBio(rs.getString("bio"));
         trainerDetails.setSpecialtyOne(rs.getString("specialty_one"));

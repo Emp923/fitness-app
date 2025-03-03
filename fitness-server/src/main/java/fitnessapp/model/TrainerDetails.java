@@ -2,7 +2,7 @@ package fitnessapp.model;
 
 public class TrainerDetails {
 
-    private int trainerId;
+    private int userId;
     private String name;
     private String bio;
     private String specialtyOne;
@@ -14,12 +14,12 @@ public class TrainerDetails {
 
     }
 
-    public int getTrainerId() {
-        return trainerId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setTrainerId(int trainerId) {
-        this.trainerId = trainerId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -71,7 +71,7 @@ public class TrainerDetails {
     }
 
     public TrainerDetails(int trainerId, String name, String bio, String specialtyOne, String specialtyTwo, String certification, String photograph) {
-        this.trainerId = trainerId;
+        this.userId = trainerId;
         this.name = name;
         this.bio = bio;
         this.specialtyOne = specialtyOne;
@@ -83,7 +83,7 @@ public class TrainerDetails {
     @Override
     public String toString() {
         return "TrainerDetails{" +
-                "trainerId=" + trainerId +
+                "userId=" + userId +
                 ", name='" + name + '\'' +
                 ", bio='" + bio + '\'' +
                 ", specialtyOne='" + specialtyOne + '\'' +
