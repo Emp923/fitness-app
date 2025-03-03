@@ -58,8 +58,7 @@ CREATE TABLE trainer_details (
     specialty_one varchar(50),
     specialty_two varchar(50),
     certification varchar(50),
-    photograph varchar(50),
-    CONSTRAINT FK_trainer_details FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+    photograph varchar(50)
 );
 
 COMMIT TRANSACTION;
