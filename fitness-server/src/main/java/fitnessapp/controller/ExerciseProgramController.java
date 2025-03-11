@@ -29,7 +29,7 @@ public class ExerciseProgramController {
         return programDao.getProgram();
     }
 
-    @RequestMapping(path = "", method = RequestMethod.GET)
+    @RequestMapping(path = "/exercise", method = RequestMethod.GET)
     public List<Exercise> listExercises(){
         return exerciseDao.getExercise();
     }
