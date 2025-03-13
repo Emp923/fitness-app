@@ -60,12 +60,10 @@ DROP TABLE IF EXISTS program_exercises CASCADE;
 CREATE TABLE program_exercises (
     id SERIAL PRIMARY KEY,
     day_of_the_week varchar(200),
-    exercise varchar(50),
+    exercise_name varchar(50),
     resistance INT,
     sets INT,
-    repetitions INT,
-    user_id INT,
-    CONSTRAINT FK_program_exercises FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+    repetitions INT
 );
 
 DROP TABLE IF EXISTS programs_program_exercises CASCADE;

@@ -1,9 +1,9 @@
 package fitnessapp.controller;
 
 import fitnessapp.dao.ExerciseDao;
-import fitnessapp.dao.ProgramDao;
+import fitnessapp.dao.ProgramExerciseDao;
 import fitnessapp.model.Exercise;
-import fitnessapp.model.Program;
+import fitnessapp.model.ProgramExercise;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,24 +13,24 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = "/program")
+@RequestMapping(path = "/programs")
 public class ExerciseProgramController {
 
-    private final ProgramDao programDao;
+    private final ProgramExerciseDao programDao;
     private final ExerciseDao exerciseDao;
 
-    public ExerciseProgramController(ProgramDao programDao, ExerciseDao exerciseDao){
-        this.programDao = programDao;
+    public ExerciseProgramController(ProgramExerciseDao programExerciseDao, ExerciseDao exerciseDao) {
+        this.programDao = programExerciseDao;
         this.exerciseDao = exerciseDao;
     }
 
     @RequestMapping(path = "", method = RequestMethod.GET)
-    public List<Program> listPrograms(){
-        return programDao.getProgram();
+    public List<ProgramExercise> listPrograms() {
+        return programDao.getProgramExercises();
     }
 
     @RequestMapping(path = "/exercise", method = RequestMethod.GET)
-    public List<Exercise> listExercises(){
+    public List<Exercise> listExercises() {
         return exerciseDao.getExercise();
     }
 }
