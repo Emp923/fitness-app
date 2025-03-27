@@ -29,10 +29,28 @@ export type ExerciseLog = {
   exerciseId: number
 }
 
-export const getPrograms = async (token: string): Promise<ProgramExercise[]> => {
-  const res = await fetch("/api/programs/program-exercises", {
-    method: "GET",
-    headers: {"Authorization": `Bearer ${token}`}
+export const getPrograms = async (): Promise<ProgramBasic[]> => {
+  const res = await fetch("/api/programs", {
+    method: "GET"
+  });
+  return res.json();
+};
+
+export const createProgram = async (program: { name: string }, token: string): Promise<ProgramBasic> => {
+  const res = await fetch("/api/programs", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(program)
+  });
+  return res.json();
+};
+
+export const getProgramDetails = async (programId: number): Promise<ProgramDetail> => {
+  const res = await fetch(`/api/programs/${programId}`, {
+    method: "GET"
   });
   return res.json();
 };
