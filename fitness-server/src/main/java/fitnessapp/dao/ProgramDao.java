@@ -1,13 +1,14 @@
 package fitnessapp.dao;
 
 import fitnessapp.model.Program;
+import fitnessapp.model.ProgramBasicDto;
 import fitnessapp.model.ProgramCreateDto;
 
 import java.util.List;
 
 public interface ProgramDao {
 
-    List<Program> listAllPrograms();
+    List<ProgramBasicDto> listAllPrograms();
 
     Program getProgramById(int id);
 

@@ -6,11 +6,11 @@ public class ProgramBasicDto {
 
     private int id;
     private String name;
-    private int createdBy;
+    private String createdBy;
 
     public ProgramBasicDto() {}
 
-    public ProgramBasicDto(int id, String name, int createdBy) {
+    public ProgramBasicDto(int id, String name, String createdBy) {
         this.id = id;
         this.name = name;
         this.createdBy = createdBy;
@@ -35,11 +35,11 @@ public class ProgramBasicDto {
     }
 
     @JsonProperty("createdBy")
-    public int getCreatedBy() {
+    public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(int createdBy) {
+    public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 

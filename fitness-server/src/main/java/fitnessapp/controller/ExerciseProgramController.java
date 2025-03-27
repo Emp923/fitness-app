@@ -55,11 +55,7 @@ public class ExerciseProgramController {
 
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<ProgramBasicDto> listPrograms() {
-        List<ProgramBasicDto> programBasicList = new ArrayList<>();
-        for (Program program : programDao.listAllPrograms()) {
-            programBasicList.add(mapProgramToProgramBasicDto(program));
-        }
-        return programBasicList;
+        return programDao.listAllPrograms();
     }
 
     @PreAuthorize("hasRole('ROLE_TRAINER')")
@@ -163,7 +159,8 @@ public class ExerciseProgramController {
         ProgramBasicDto programBasicDto = new ProgramBasicDto();
         programBasicDto.setId(program.getId());
         programBasicDto.setName(program.getName());
-        programBasicDto.setCreatedBy(program.getCreatedBy());
+//        programBasicDto.setCreatedBy(program.getCreatedBy());
+        programBasicDto.setCreatedBy("xxxxx");
         return programBasicDto;
     }
 

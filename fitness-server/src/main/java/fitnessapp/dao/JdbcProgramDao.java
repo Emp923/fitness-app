@@ -2,6 +2,7 @@ package fitnessapp.dao;
 
 import fitnessapp.exception.DaoException;
 import fitnessapp.model.Program;
+import fitnessapp.model.ProgramBasicDto;
 import fitnessapp.model.ProgramCreateDto;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -21,14 +22,15 @@ public class JdbcProgramDao implements ProgramDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Program> listAllPrograms() {
-        List<Program> programs = new ArrayList<>();
-        String sql = "SELECT id, name, created_by FROM programs ORDER BY name";
+    public List<ProgramBasicDto> listAllPrograms() {
+        List<ProgramBasicDto> programs = new ArrayList<>();
+        String sql = "SELECT programs.id, programs.name, trainer_details.name AS created_by FROM programs " +
+                "JOIN trainer_details ON programs.created_by = trainer_details.user_id ORDER BY programs.name";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
-                Program program = mapRowToProgram(results);
+                ProgramBasicDto program = mapRowToProgramBasicDto(results);
                 programs.add(program);
             }
         } catch (CannotGetJdbcConnectionException e) {
@@ -75,6 +77,14 @@ public class JdbcProgramDao implements ProgramDao {
         program.setId(rowSet.getInt("id"));
         program.setName(rowSet.getString("name"));
         program.setCreatedBy(rowSet.getInt("created_by"));
+        return program;
+    }
+
+    private ProgramBasicDto mapRowToProgramBasicDto(SqlRowSet rowSet) {
+        ProgramBasicDto program = new ProgramBasicDto();
+        program.setId(rowSet.getInt("id"));
+        program.setName(rowSet.getString("name"));
+        program.setCreatedBy(rowSet.getString("created_by"));
         return program;
     }
 
