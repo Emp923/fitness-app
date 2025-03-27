@@ -1,3 +1,16 @@
+export type ProgramBasic = {
+  id: number,
+  name: string,
+  createdBy: string
+};
+
+export type ProgramDetail = {
+  id: number,
+  name: string,
+  createdBy: string,
+  programExercises: ProgramExercise[]
+};
+
 export type ProgramExercise = {
   id: number,
   dayOfTheWeek: string,
