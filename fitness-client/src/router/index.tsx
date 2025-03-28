@@ -12,6 +12,7 @@ import AdminRoute from "../components/AdminRoute";
 import TrainersPage from "../pages/TrainersPage";
 import TrainerRoute from "../components/TrainerRoute";
 import TrainerHomePage from "../pages/TrainerHomePage";
+import ProgramPage from "../pages/ProgramPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,6 +24,7 @@ const router = createBrowserRouter(
       <Route path="" element={<PrivateRoute />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/user-details" element={<UserDetails />}/>
+        <Route path="/program/:id" element={<ProgramPage />} />
         <Route path="/admin" element={<AdminRoute />}>
           <Route path="" element={<AdminPage />} />
         </Route>

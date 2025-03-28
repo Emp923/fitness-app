@@ -1,4 +1,5 @@
 import { useState, useEffect, FormEvent } from "react";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { ProgramBasic, getPrograms, createProgram } from "../services/exerciseProgramService";
@@ -22,6 +23,8 @@ const TrainerHomePage = () => {
   }, []);
 
   const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    
     const formData = {
       name: programName
     };
@@ -51,7 +54,9 @@ const TrainerHomePage = () => {
       <h2>Available Programs</h2>
       {programs.map(program => (
         <div key={program.id}>
-          <h3>{program.name}</h3>
+          <Link to={`/program/${program.id}`}>
+            <h3>{program.name}</h3>
+          </Link>
           <p>Created By: {program.createdBy}</p>
         </div>
       ))}
