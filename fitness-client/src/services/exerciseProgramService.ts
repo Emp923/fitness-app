@@ -12,7 +12,7 @@ export type ProgramDetail = {
 };
 
 export type ProgramExercise = {
-  id: number,
+  id?: number,
   dayOfTheWeek: string,
   exerciseName: string,
   resistance: number,
@@ -51,6 +51,18 @@ export const createProgram = async (program: { name: string }, token: string): P
 export const getProgramDetails = async (programId: number): Promise<ProgramDetail> => {
   const res = await fetch(`/api/programs/${programId}`, {
     method: "GET"
+  });
+  return res.json();
+};
+
+export const createProgramExercise = async (programExercise: ProgramExercise, token: string): Promise<ProgramExercise> => {
+  const res = await fetch("/api/programs/program-exercises", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(programExercise)
   });
   return res.json();
 };
