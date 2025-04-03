@@ -55,6 +55,13 @@ export const getProgramDetails = async (programId: number): Promise<ProgramDetai
   return res.json();
 };
 
+export const getProgramExercises = async (): Promise<ProgramExercise[]> => {
+  const res = await fetch("/api/programs/program-exercises", {
+    method: "GET",
+  });
+  return res.json();
+};
+
 export const createProgramExercise = async (programExercise: ProgramExercise, token: string): Promise<ProgramExercise> => {
   const res = await fetch("/api/programs/program-exercises", {
     method: "POST",
@@ -65,6 +72,15 @@ export const createProgramExercise = async (programExercise: ProgramExercise, to
     body: JSON.stringify(programExercise)
   });
   return res.json();
+};
+
+export const assignProgramExerciseToProgram = async (programId: number, programExerciseId: number, token: string) => {
+  const res = await fetch(`/api/programs/${programId}/assign-program-exercise/${programExerciseId}`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  });
 };
 
 export const getExerciseLog = async (token: string): Promise<ExerciseLog[]> => {

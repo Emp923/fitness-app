@@ -107,6 +107,8 @@ public class ExerciseProgramController {
         this.getProgramById(programId);
         this.getProgramExerciseById(programExerciseId);
 
+        // TODO: Check if assignment already exists, if so return 400 - Bad Request
+
         programExerciseDao.assignProgramExerciseToProgram(programExerciseId, programId);
     }
 
