@@ -25,19 +25,6 @@ const TrainerHomePage = () => {
   const [programs, setPrograms] = useState<ProgramBasic[]>([]);
   const [programName, setProgramName] = useState<string>("");
 
-  useEffect(() => {
-    const callApi = async () => {
-      try {
-        const programs = await getPrograms();
-        setPrograms(programs);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    callApi();
-  }, []);
-
   const handleCreateProgramSubmit = async (event: FormEvent) => {
     event.preventDefault();
     
@@ -50,15 +37,30 @@ const TrainerHomePage = () => {
     } catch (error) {
       console.log(error);
     }
+    setProgramName("");
   };
+
+  useEffect(() => {
+    const callApi = async () => {
+      try {
+        const programs = await getPrograms();
+        setPrograms(programs);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    callApi();
+  }, [handleCreateProgramSubmit]);
 
   return (
     <>
       <h1>Trainer Home Page</h1>
       <div style={{ display: "flex" }}>
         <CreateProgramForm
-          handleSubmit={handleCreateProgramSubmit}
+          programName={programName}
           setProgramName={setProgramName}
+          handleSubmit={handleCreateProgramSubmit}
         />
         <CreateProgramExerciseForm
           token={token}
@@ -78,11 +80,12 @@ const TrainerHomePage = () => {
 };
 
 type CreateProgramFormProps = {
-  handleSubmit: (event: FormEvent) => void,
-  setProgramName: (programName: string) => void
+  programName: string,
+  setProgramName: (programName: string) => void,
+  handleSubmit: (event: FormEvent) => void
 };
 
-const CreateProgramForm = ({ handleSubmit, setProgramName }: CreateProgramFormProps) => {
+const CreateProgramForm = ({ programName, setProgramName, handleSubmit }: CreateProgramFormProps) => {
   return (
     <div style={{ width: 500 }}>
       <h2>Create New Program</h2>
@@ -92,6 +95,7 @@ const CreateProgramForm = ({ handleSubmit, setProgramName }: CreateProgramFormPr
           <input
             type="text"
             name="name"
+            value={programName}
             onChange={(e) => setProgramName(e.target.value)}
           />
         </div>

@@ -38,12 +38,15 @@ const ProgramPage = () => {
     };
 
     callApi();
-  }, [handleFormSubmit]);
+  }, []);
 
   useEffect(() => {
     const callApi = async () => {
       try {
-        const programExercises = await getProgramExercises();
+        let programExercises = await getProgramExercises();
+        program?.programExercises.forEach(programPE => {
+          programExercises = programExercises.filter(pe => pe.id !== programPE.id);
+        });
         setProgramExercises(programExercises);
       } catch (error) {
         console.log(error);
@@ -51,7 +54,7 @@ const ProgramPage = () => {
     };
 
     callApi();
-  }, []);
+  }, [program]);
 
   if (!program) {
     return <h1>Loading...</h1>;
