@@ -23,7 +23,7 @@ const ProgramPage = () => {
       return;
     }
 
-    assignProgramExerciseToProgram(id as unknown as number, selectedExerciseId, token);
+    assignProgramExerciseToProgram(Number(id), selectedExerciseId, token);
     setSelectedExerciseId(0);
   };
 
@@ -84,7 +84,7 @@ const ProgramPage = () => {
           <form action="#" onSubmit={handleFormSubmit}>
             <div className="form-group">
               <label>Select Exercise:</label>
-              <select value={selectedExerciseId} onChange={(e) => setSelectedExerciseId(e.target.value as unknown as number)}>
+              <select value={selectedExerciseId} onChange={(e) => setSelectedExerciseId(Number(e.target.value))}>
                 <option value={0}>Select Exercise...</option>
                 {programExercises.map(programExercise => (
                   <option key={programExercise.id} value={programExercise.id}>

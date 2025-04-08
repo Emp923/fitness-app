@@ -107,7 +107,10 @@ public class ExerciseProgramController {
         this.getProgramById(programId);
         this.getProgramExerciseById(programExerciseId);
 
-        // TODO: Check if assignment already exists, if so return 400 - Bad Request
+        if (this.programExerciseDao.isProgramExerciseAssignedToProgram(programExerciseId, programId)) {
+            LOGGER.debug("Program to Program Exercise relationship already exists");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "relationship already exists");
+        }
 
         programExerciseDao.assignProgramExerciseToProgram(programExerciseId, programId);
     }
