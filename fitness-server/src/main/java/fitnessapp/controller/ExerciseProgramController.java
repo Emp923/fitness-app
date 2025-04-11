@@ -5,14 +5,7 @@ import fitnessapp.dao.ProgramDao;
 import fitnessapp.dao.ProgramExerciseDao;
 import fitnessapp.dao.UserDao;
 import fitnessapp.exception.DaoException;
-import fitnessapp.model.Exercise;
-import fitnessapp.model.Program;
-import fitnessapp.model.ProgramBasicDto;
-import fitnessapp.model.ProgramCreateDto;
-import fitnessapp.model.ProgramDetailDto;
-import fitnessapp.model.ProgramExercise;
-import fitnessapp.model.ProgramExerciseDto;
-import fitnessapp.model.User;
+import fitnessapp.model.*;
 import fitnessapp.security.SecurityUtils;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -158,6 +151,33 @@ public class ExerciseProgramController {
     public List<Exercise> listExercises() {
         return exerciseDao.getExercise();
     }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path = "/submit-exercise-log", method = RequestMethod.POST)
+    public Exercise submitExerciseLog(@Valid @RequestBody ExerciseLogDto exerciseLogDto){
+
+        Exercise newExerciseLog = new Exercise();
+
+        newExerciseLog.setRecordedDate(exerciseLogDto.getRecordedDate());
+        newExerciseLog.setResistance(exerciseLogDto.getResistance());
+        newExerciseLog.setSets(exerciseLogDto.getSets());
+        newExerciseLog.setRepetitions(exerciseLogDto.getRepetitions());
+        newExerciseLog.setComments(exerciseLogDto.getComments());
+
+        ProgramExercise programExercise = programExerciseDao.getProgramExerciseByName(exerciseLogDto.getExerciseName());
+        if(programExercise == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Exercise not found.");
+        }
+        newExerciseLog.setExerciseId(programExercise.getId());
+
+        try{
+            Exercise submittedExercise = exerciseDao.submitExercise(newExerciseLog);
+            return submittedExercise;
+        }catch(DaoException e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
 
     private ProgramBasicDto mapProgramToProgramBasicDto(Program program) {
         ProgramBasicDto programBasicDto = new ProgramBasicDto();

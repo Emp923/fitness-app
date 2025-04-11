@@ -17,3 +17,16 @@ export const getExercises = async (exerciseQuery: ExerciseQuery) => {
     headers: { "X-Api-Key": API_KEY }
   });
 };
+
+export const getExerciseByName = async (exerciseName: string) => {
+  const API_KEY = import.meta.env.VITE_API_KEY;
+  if (!API_KEY) {
+    throw Error("API_KEY required to retreive exercises");
+  }
+
+  const queryString = `name=${exerciseName}`
+
+  return fetch(`/exercises?${queryString}`, {
+    headers: { "X-Api-Key": API_KEY }
+  });
+};

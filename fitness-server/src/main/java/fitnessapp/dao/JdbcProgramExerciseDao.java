@@ -58,6 +58,24 @@ public class JdbcProgramExerciseDao implements ProgramExerciseDao {
     }
 
     @Override
+    public ProgramExercise getProgramExerciseByName(String exerciseName){
+        ProgramExercise programExercise = null;
+        String sql = "SELECT id, day_of_the_week, exercise_name, resistance, sets, repetitions " +
+                "FROM program_exercises WHERE exercise_name = ?";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, exerciseName);
+            while (results.next()) {
+                programExercise = mapRowToProgram(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+
+        return programExercise;
+    }
+
+    @Override
     public List<ProgramExercise> getProgramExercisesByProgramId(int programId) {
         List<ProgramExercise> programExercises = new ArrayList<>();
         String sql = "SELECT program_exercises.id, program_exercises.day_of_the_week, program_exercises.exercise_name," +

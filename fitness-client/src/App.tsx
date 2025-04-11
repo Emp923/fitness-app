@@ -6,7 +6,8 @@ const App = () => {
       <div id="nav">
         <Link to="/">Home</Link>&nbsp;|&nbsp;
         <Link to="/logout">Logout</Link>&nbsp;|&nbsp;
-        <Link to="/trainers">View Trainers</Link>
+        <Link to="/trainers">View Trainers</Link>&nbsp;|&nbsp;
+        <Link to="/program">View My Programs</Link>
       </div>
       <Outlet />
     </div>
