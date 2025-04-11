@@ -1,19 +1,20 @@
 package fitnessapp.model;
 
-public class Exercise {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class ExerciseLogDto {
 
     private int id;
     private String recordedDate;
     private int resistance;
     private int sets;
     private int repetitions;
-    private int exerciseId;
+    private String exerciseName;
     private String comments;
 
-    public Exercise(){
+    public ExerciseLogDto() {}
 
-    }
-
+    @JsonProperty("id")
     public int getId() {
         return id;
     }
@@ -22,6 +23,7 @@ public class Exercise {
         this.id = id;
     }
 
+    @JsonProperty("recordedDate")
     public String getRecordedDate() {
         return recordedDate;
     }
@@ -30,6 +32,7 @@ public class Exercise {
         this.recordedDate = recordedDate;
     }
 
+    @JsonProperty("resistance")
     public int getResistance() {
         return resistance;
     }
@@ -38,6 +41,7 @@ public class Exercise {
         this.resistance = resistance;
     }
 
+    @JsonProperty("sets")
     public int getSets() {
         return sets;
     }
@@ -46,6 +50,7 @@ public class Exercise {
         this.sets = sets;
     }
 
+    @JsonProperty("repetitions")
     public int getRepetitions() {
         return repetitions;
     }
@@ -54,14 +59,16 @@ public class Exercise {
         this.repetitions = repetitions;
     }
 
-    public int getExerciseId() {
-        return exerciseId;
+    @JsonProperty("exerciseName")
+    public String getExerciseName() {
+        return exerciseName;
     }
 
-    public void setExerciseId(int exerciseId) {
-        this.exerciseId = exerciseId;
+    public void setExerciseName(String exerciseName) {
+        this.exerciseName = exerciseName;
     }
 
+    @JsonProperty("comments")
     public String getComments() {
         return comments;
     }
@@ -70,25 +77,25 @@ public class Exercise {
         this.comments = comments;
     }
 
-    public Exercise(int id, String recordedDate, int resistance, int sets, int repetitions, int exerciseId, String comments) {
+    public ExerciseLogDto(int id, String recordedDate, int resistance, int sets, int repetitions, String exerciseName, String comments) {
         this.id = id;
         this.recordedDate = recordedDate;
         this.resistance = resistance;
         this.sets = sets;
         this.repetitions = repetitions;
-        this.exerciseId = exerciseId;
+        this.exerciseName = exerciseName;
         this.comments = comments;
     }
 
     @Override
     public String toString() {
-        return "Exercise{" +
+        return "ExerciseLogDto{" +
                 "id=" + id +
                 ", recordedDate='" + recordedDate + '\'' +
                 ", resistance=" + resistance +
                 ", sets=" + sets +
                 ", repetitions=" + repetitions +
-                ", exerciseId=" + exerciseId +
+                ", exerciseName='" + exerciseName + '\'' +
                 ", comments='" + comments + '\'' +
                 '}';
     }

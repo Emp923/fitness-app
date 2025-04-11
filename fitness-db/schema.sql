@@ -84,7 +84,10 @@ CREATE TABLE exercise_log (
     sets INT,
     repetitions INT,
     exercise_id INT,
-    CONSTRAINT FK_exercise_log FOREIGN KEY (exercise_id) REFERENCES program_exercises(id) ON DELETE CASCADE
+    comments varchar(200),
+    user_id INT,
+    CONSTRAINT FK_exercise_log FOREIGN KEY (exercise_id) REFERENCES program_exercises(id) ON DELETE CASCADE,
+    CONSTRAINT FK_user_exercise_log FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 COMMIT TRANSACTION;

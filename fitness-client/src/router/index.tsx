@@ -10,6 +10,8 @@ import UserDetails from "../pages/UserDetails";
 import AdminPage from "../pages/AdminPage";
 import AdminRoute from "../components/AdminRoute";
 import TrainersPage from "../pages/TrainersPage";
+import ExerciseProgramPage from "../pages/ExerciseProgramPage";
+import MyExerciseInstructionPage from "../pages/MyExerciseInstructionPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +27,8 @@ const router = createBrowserRouter(
           <Route path="" element={<AdminPage />} />
         </Route>
         <Route path="/trainers" element={<TrainersPage/>}/>
+        <Route path="/program" element={<ExerciseProgramPage/>}/>
+        <Route path="/exercise/:exerciseName" element={<MyExerciseInstructionPage/>}/>
       </Route>
     </Route>
   )
