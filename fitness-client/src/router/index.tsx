@@ -13,6 +13,8 @@ import TrainersPage from "../pages/TrainersPage";
 import TrainerRoute from "../components/TrainerRoute";
 import TrainerHomePage from "../pages/TrainerHomePage";
 import ProgramPage from "../pages/ProgramPage";
+import ExerciseProgramPage from "../pages/ExerciseProgramPage";
+import MyExerciseInstructionPage from "../pages/MyExerciseInstructionPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,6 +34,8 @@ const router = createBrowserRouter(
           <Route path="" element={<TrainerHomePage />} />
         </Route>
         <Route path="/trainers" element={<TrainersPage/>}/>
+        <Route path="/program" element={<ExerciseProgramPage/>}/>
+        <Route path="/exercise/:exerciseName" element={<MyExerciseInstructionPage/>}/>
       </Route>
     </Route>
   )

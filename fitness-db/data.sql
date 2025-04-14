@@ -31,4 +31,10 @@ INSERT INTO trainer_details (user_id,name,bio,specialty_one,specialty_two,certif
 INSERT INTO trainer_details (user_id,name,bio,specialty_one,specialty_two,certification,photograph) VALUES (14,'Jared Taylor','Bio','Performance','Endurance','CSCS,CES','photo.png');
 INSERT INTO trainer_details (user_id,name,bio,specialty_one,specialty_two,certification,photograph) VALUES (15,'Brian Ferguson','Bio','Performance','Endurance','CSCS','photo.png');
 
+-- Placeholder Program Exercises
+INSERT INTO program_exercises (id,day_of_the_week,exercise_name,resistance,sets,repetitions) VALUES (16,'Monday','Dumbbell bent-over row',35,3,12);
+INSERT INTO program_exercises (id,day_of_the_week,exercise_name,resistance,sets,repetitions) VALUES (17,'Wednesday','Dumbbell Flys',25,3,10);
+INSERT INTO program_exercises (id,day_of_the_week,exercise_name,resistance,sets,repetitions) VALUES (18,'Monday, Thursday','Bicep Curls',25,3,20);
+INSERT INTO program_exercises (id,day_of_the_week,exercise_name,resistance,sets,repetitions) VALUES (19,'Tuesday, Thursday','Incline Hammer Curls',20,3,15);
+
 COMMIT TRANSACTION;

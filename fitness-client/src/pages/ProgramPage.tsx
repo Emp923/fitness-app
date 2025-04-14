@@ -43,7 +43,7 @@ const ProgramPage = () => {
   useEffect(() => {
     const callApi = async () => {
       try {
-        let programExercises = await getProgramExercises();
+        let programExercises = await getProgramExercises(token);
         program?.programExercises.forEach(programPE => {
           programExercises = programExercises.filter(pe => pe.id !== programPE.id);
         });

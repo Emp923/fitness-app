@@ -11,6 +11,8 @@ public interface ProgramExerciseDao {
 
     ProgramExercise getProgramExerciseById(int programExerciseId);
 
+    ProgramExercise getProgramExerciseByName(String exerciseName);
+
     List<ProgramExercise> getProgramExercisesByProgramId(int programId);
 
     ProgramExercise createProgramExercise(ProgramExerciseDto programExerciseDto);
