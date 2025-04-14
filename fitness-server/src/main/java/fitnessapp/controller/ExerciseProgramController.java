@@ -48,54 +48,47 @@ public class ExerciseProgramController {
 
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<ProgramBasicDto> listPrograms() {
-        List<ProgramBasicDto> programBasicList = new ArrayList<>();
-        for (Program program : programDao.listAllPrograms()) {
-            programBasicList.add(mapProgramToProgramBasicDto(program));
-        }
-        return programBasicList;
+        return programDao.listAllPrograms();
     }
 
     @PreAuthorize("hasRole('ROLE_TRAINER')")
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "", method = RequestMethod.POST)
-    public ProgramBasicDto createNewProgram(@RequestBody ProgramCreateDto programCreateDto) {
+    public Program createNewProgram(@RequestBody ProgramCreateDto programCreateDto) {
         if (programCreateDto == null || programCreateDto.getName() == null || programCreateDto.getName().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Required field 'name' is missing or blank");
         }
 
         User currentTrainer = userDao.getUserByUsername(SecurityUtils.getCurrentUsername());
 
-        ProgramBasicDto newProgramDto = null;
+        Program newProgram = null;
 
         try {
-            Program newProgram = programDao.createProgram(currentTrainer.getId(), programCreateDto);
-            newProgramDto = mapProgramToProgramBasicDto(newProgram);
+            newProgram = programDao.createProgram(currentTrainer.getId(), programCreateDto);
         } catch (DaoException e) {
             LOGGER.error(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return newProgramDto;
+        return newProgram;
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ProgramDetailDto getProgramById(@PathVariable("id") int programId) {
-        Program program = programDao.getProgramById(programId);
+        ProgramDetailDto program = programDao.getProgramDetailById(programId);
 
         if (program == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("program with id: %s was not found", programId));
         }
-
-        ProgramDetailDto programDetailDto = mapProgramToProgramDetailDto(program);
 
         List<ProgramExercise> programExercises = programExerciseDao.getProgramExercisesByProgramId(programId);
         List<ProgramExerciseDto> programExerciseDtos = new ArrayList<>();
         for (ProgramExercise programExercise : programExercises) {
             programExerciseDtos.add(mapProgramExerciseToProgramExerciseDto(programExercise));
         }
-        programDetailDto.setProgramExercises(programExerciseDtos);
+        program.setProgramExercises(programExerciseDtos);
 
-        return programDetailDto;
+        return program;
     }
 
     @PreAuthorize("hasRole('ROLE_TRAINER')")
@@ -106,6 +99,11 @@ public class ExerciseProgramController {
 
         this.getProgramById(programId);
         this.getProgramExerciseById(programExerciseId);
+
+        if (this.programExerciseDao.isProgramExerciseAssignedToProgram(programExerciseId, programId)) {
+            LOGGER.debug("Program to Program Exercise relationship already exists");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "relationship already exists");
+        }
 
         programExerciseDao.assignProgramExerciseToProgram(programExerciseId, programId);
     }
@@ -178,15 +176,6 @@ public class ExerciseProgramController {
         }
     }
 
-
-    private ProgramBasicDto mapProgramToProgramBasicDto(Program program) {
-        ProgramBasicDto programBasicDto = new ProgramBasicDto();
-        programBasicDto.setId(program.getId());
-        programBasicDto.setName(program.getName());
-        programBasicDto.setCreatedBy(program.getCreatedBy());
-        return programBasicDto;
-    }
-
     private ProgramExerciseDto mapProgramExerciseToProgramExerciseDto(ProgramExercise programExercise) {
         ProgramExerciseDto programExerciseDto = new ProgramExerciseDto();
         programExerciseDto.setId(programExercise.getId());
@@ -198,11 +187,4 @@ public class ExerciseProgramController {
         return programExerciseDto;
     }
 
-    private ProgramDetailDto mapProgramToProgramDetailDto(Program program) {
-        ProgramDetailDto programDetailDto = new ProgramDetailDto();
-        programDetailDto.setId(program.getId());
-        programDetailDto.setName(program.getName());
-        programDetailDto.setCreatedBy(program.getCreatedBy());
-        return programDetailDto;
-    }
 }

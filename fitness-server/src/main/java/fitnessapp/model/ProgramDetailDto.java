@@ -8,7 +8,7 @@ public class ProgramDetailDto {
 
     private int id;
     private String name;
-    private int createdBy;
+    private String createdBy;
     private List<ProgramExerciseDto> programExercises;
 
     @JsonProperty("id")
@@ -30,11 +30,11 @@ public class ProgramDetailDto {
     }
 
     @JsonProperty("createdBy")
-    public int getCreatedBy() {
+    public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(int createdBy) {
+    public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 

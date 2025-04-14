@@ -124,12 +124,25 @@ public class JdbcProgramExerciseDao implements ProgramExerciseDao {
         String insertSql = "INSERT INTO programs_program_exercises (program_id, program_exercise_id) VALUES (?, ?)";
 
         try {
-//            jdbcTemplate.queryForObject(insertSql, int.class, programId, programExerciseId);
             jdbcTemplate.update(insertSql, programId, programExerciseId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
+        }
+    }
+
+    @Override
+    public boolean isProgramExerciseAssignedToProgram(int programExerciseId, int programId) {
+        String sql = "SELECT program_exercise_id, program_id " +
+                "FROM programs_program_exercises " +
+                "WHERE program_exercise_id = ? AND program_id = ?";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, programExerciseId, programId);
+            return results.next();
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
         }
     }
 
