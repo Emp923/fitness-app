@@ -122,6 +122,14 @@ const CreateProgramExerciseForm = ({ token }: CreateProgramExerciseFormProps) =>
     );
   };
 
+  const resetForm = () => {
+    setDayOfTheWeek([]);
+    setExerciseName("");
+    setResistance(0);
+    setSets(0);
+    setRepetitions(0);
+  };
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
@@ -135,11 +143,7 @@ const CreateProgramExerciseForm = ({ token }: CreateProgramExerciseFormProps) =>
 
     try {
       const res = createProgramExercise(programExercise, token);
-      setDayOfTheWeek([]);
-      setExerciseName("");
-      setResistance(0);
-      setSets(0);
-      setRepetitions(0);
+      resetForm();
     } catch (error) {
       console.log(error);
     }
@@ -182,7 +186,7 @@ const CreateProgramExerciseForm = ({ token }: CreateProgramExerciseFormProps) =>
             type="number"
             name="resistance"
             value={resistance}
-            onChange={(e) => setResistance(e.target.value as unknown as number)}
+            onChange={(e) => setResistance(Number(e.target.value))}
           />
         </div>
         <div className="form-group">
@@ -191,7 +195,7 @@ const CreateProgramExerciseForm = ({ token }: CreateProgramExerciseFormProps) =>
             type="number"
             name="sets"
             value={sets}
-            onChange={(e) => setSets(e.target.value as unknown as number)}
+            onChange={(e) => setSets(Number(e.target.value))}
           />
         </div>
         <div className="form-group">
@@ -200,7 +204,7 @@ const CreateProgramExerciseForm = ({ token }: CreateProgramExerciseFormProps) =>
             type="number"
             name="repetitions"
             value={repetitions}
-            onChange={(e) => setRepetitions(e.target.value as unknown as number)}
+            onChange={(e) => setRepetitions(Number(e.target.value))}
           />
         </div>
         <button type="submit">Save Exercise</button>
