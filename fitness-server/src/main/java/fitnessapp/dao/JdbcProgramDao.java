@@ -43,6 +43,28 @@ public class JdbcProgramDao implements ProgramDao {
     }
 
     @Override
+    public List<ProgramBasicDto> getProgramsByUserId(int userId) {
+        List<ProgramBasicDto> programs = new ArrayList<>();
+        String sql = "SELECT programs.id, programs.name, trainer_details.name AS created_by FROM programs " +
+                "JOIN trainer_details ON programs.created_by = trainer_details.user_id " +
+                "JOIN programs_users ON programs.id = programs_users.program_id " +
+                "WHERE programs_users.user_id = ? " +
+                "ORDER BY programs.name";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+            while (results.next()) {
+                ProgramBasicDto program = mapRowToProgramBasicDto(results);
+                programs.add(program);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+
+        return programs;
+    }
+
+    @Override
     public Program getProgramById(int id) {
         Program program = null;
         String sql = "SELECT id, name, created_by FROM programs WHERE id = ?";
@@ -92,6 +114,19 @@ public class JdbcProgramDao implements ProgramDao {
         }
 
         return newProgram;
+    }
+
+    @Override
+    public void assignProgramToUser(int programId, int userId) {
+        String insertSql = "INSERT INTO programs_users (user_id, program_id) VALUES (?, ?)";
+
+        try {
+            jdbcTemplate.update(insertSql, userId, programId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
     }
 
     private Program mapRowToProgram(SqlRowSet rowSet) {

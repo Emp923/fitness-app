@@ -11,10 +11,13 @@ public interface ProgramDao {
 
     List<ProgramBasicDto> listAllPrograms();
 
+    List<ProgramBasicDto> getProgramsByUserId(int userId);
+
     ProgramDetailDto getProgramDetailById(int id);
 
     Program getProgramById(int id);
 
     Program createProgram(int trainerId, ProgramCreateDto programCreateDto);
 
+    void assignProgramToUser(int programId, int userId);
 }

@@ -91,6 +91,36 @@ public class ExerciseProgramController {
         return program;
     }
 
+    @RequestMapping(path = "/my-programs", method = RequestMethod.GET)
+    public List<ProgramBasicDto> viewUserPrograms() {
+        User currentUser = userDao.getUserByUsername(SecurityUtils.getCurrentUsername());
+
+        if (currentUser == null) {
+            LOGGER.debug("Unknown username");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown username");
+        }
+
+        return programDao.getProgramsByUserId(currentUser.getId());
+    }
+
+    @PreAuthorize("hasRole('ROLE_TRAINER')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(path = "/{programId}/assign-to-user/{userId}", method = RequestMethod.POST)
+    public void assignProgramToUser(@PathVariable("programId") int programId,
+                                    @PathVariable("userId") int userId) {
+
+        this.getProgramById(programId);
+        if (userDao.getUserById(userId) == null) {
+            String message = String.format("User with id: %s was not found", userId);
+            LOGGER.debug(message);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
+        }
+
+        // TODO check if relationship already exists, else 400
+
+        programDao.assignProgramToUser(programId, userId);
+    }
+
     @PreAuthorize("hasRole('ROLE_TRAINER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/{programId}/assign-program-exercise/{programExerciseId}", method = RequestMethod.POST)
