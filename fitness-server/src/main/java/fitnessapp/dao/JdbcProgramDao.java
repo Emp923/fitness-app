@@ -129,6 +129,20 @@ public class JdbcProgramDao implements ProgramDao {
         }
     }
 
+    @Override
+    public boolean isProgramAssignedToUser(int programId, int userId) {
+        String sql = "SELECT user_id, program_id " +
+                "FROM programs_users " +
+                "WHERE user_id = ? AND program_id = ?";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, programId);
+            return results.next();
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+    }
+
     private Program mapRowToProgram(SqlRowSet rowSet) {
         Program program = new Program();
         program.setId(rowSet.getInt("id"));

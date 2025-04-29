@@ -20,4 +20,6 @@ public interface ProgramDao {
     Program createProgram(int trainerId, ProgramCreateDto programCreateDto);
 
     void assignProgramToUser(int programId, int userId);
+
+    boolean isProgramAssignedToUser(int programId, int userId);
 }

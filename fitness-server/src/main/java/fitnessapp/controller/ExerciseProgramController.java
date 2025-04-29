@@ -116,7 +116,10 @@ public class ExerciseProgramController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
         }
 
-        // TODO check if relationship already exists, else 400
+        if (this.programDao.isProgramAssignedToUser(programId, userId)) {
+            LOGGER.debug("Program to User relationship already exists");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "relationship already exists");
+        }
 
         programDao.assignProgramToUser(programId, userId);
     }
