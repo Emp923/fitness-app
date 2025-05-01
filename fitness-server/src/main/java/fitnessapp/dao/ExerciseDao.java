@@ -10,6 +10,8 @@ public interface ExerciseDao {
 
     Exercise getExerciseById(int id);
 
+    List<Exercise> getExerciseLogByUserId(int userId);
+
     Exercise submitExercise(Exercise exercise);
 
 }

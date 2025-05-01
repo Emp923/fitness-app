@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Component
 public class JdbcExerciseDao implements ExerciseDao{
@@ -24,7 +25,7 @@ public class JdbcExerciseDao implements ExerciseDao{
     @Override
     public List<Exercise> getExercise(){
         List<Exercise> exercise = new ArrayList<>();
-        String sql = "SELECT id, recorded_date, resistance, sets, repetitions, exercise_id, comments " +
+        String sql = "SELECT id, recorded_date, resistance, sets, repetitions, exercise_id, comments, user_id " +
                 "FROM exercise_log ORDER BY exercise_id ASC";
 
         try{
@@ -43,7 +44,7 @@ public class JdbcExerciseDao implements ExerciseDao{
     @Override
     public Exercise getExerciseById(int id){
         Exercise exercise = null;
-        String sql = "SELECT id, recorded_date, resistance, sets, repetitions, exercise_id, comments " +
+        String sql = "SELECT id, recorded_date, resistance, sets, repetitions, exercise_id, comments, user_id " +
                 "FROM exercise_log WHERE id = ?";
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
@@ -57,16 +58,33 @@ public class JdbcExerciseDao implements ExerciseDao{
     }
 
     @Override
+    public List<Exercise> getExerciseLogByUserId(int userId){
+        List<Exercise> exercises = new ArrayList<>();
+        String sql = "SELECT id, recorded_date, resistance, sets, repetitions, exercise_id, comments, user_id " +
+                "FROM exercise_log WHERE user_id = ?";
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+            while (results.next()){
+                Exercise exercise = mapRowToExercise(results);
+                exercises.add(exercise);
+            }
+        }catch(CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return exercises;
+    }
+
+    @Override
     public Exercise submitExercise(Exercise exercise){
         Exercise newExercise = null;
         String sql = "INSERT INTO exercise_log " +
-                "(recorded_date, resistance, sets, repetitions, exercise_id, comments) " +
-                "VALUES (?, ?, ?, ?, ?, ?) " +
+                "(recorded_date, resistance, sets, repetitions, exercise_id, comments, user_id) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?) " +
                 "RETURNING id";
 
         try{
             int newExerciseId = jdbcTemplate.queryForObject(sql, int.class, Date.valueOf(exercise.getRecordedDate()), exercise.getResistance(),
-                    exercise.getSets(), exercise.getRepetitions(), exercise.getExerciseId(), exercise.getComments());
+                    exercise.getSets(), exercise.getRepetitions(), exercise.getExerciseId(), exercise.getComments(), exercise.getUserId());
             newExercise = getExerciseById(newExerciseId);
         }catch(CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to server", e);
@@ -86,6 +104,7 @@ public class JdbcExerciseDao implements ExerciseDao{
         exercise.setRepetitions(rs.getInt("repetitions"));
         exercise.setExerciseId(rs.getInt("exercise_id"));
         exercise.setComments(rs.getString("comments"));
+        exercise.setUserId(rs.getInt("user_id"));
         return exercise;
     }
 }
