@@ -23,7 +23,12 @@ const ProgramPage = () => {
       return;
     }
 
-    assignProgramExerciseToProgram(Number(id), selectedExerciseId, token);
+    try {
+      assignProgramExerciseToProgram(Number(id), selectedExerciseId, token);
+      alert('Exercise was assigned successfully');
+    } catch (error) {
+      console.log(error);
+    }
     setSelectedExerciseId(0);
   };
 
