@@ -9,6 +9,7 @@ public class Exercise {
     private int repetitions;
     private int exerciseId;
     private String comments;
+    private int userId;
 
     public Exercise(){
 
@@ -70,7 +71,15 @@ public class Exercise {
         this.comments = comments;
     }
 
-    public Exercise(int id, String recordedDate, int resistance, int sets, int repetitions, int exerciseId, String comments) {
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public Exercise(int id, String recordedDate, int resistance, int sets, int repetitions, int exerciseId, String comments, int userId) {
         this.id = id;
         this.recordedDate = recordedDate;
         this.resistance = resistance;
@@ -78,6 +87,7 @@ public class Exercise {
         this.repetitions = repetitions;
         this.exerciseId = exerciseId;
         this.comments = comments;
+        this.userId = userId;
     }
 
     @Override
@@ -90,6 +100,7 @@ public class Exercise {
                 ", repetitions=" + repetitions +
                 ", exerciseId=" + exerciseId +
                 ", comments='" + comments + '\'' +
+                ", userId=" + userId +
                 '}';
     }
 }

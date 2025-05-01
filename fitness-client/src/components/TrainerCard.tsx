@@ -10,9 +10,9 @@ type Props = {
 const TrainerCard = ({trainer}: Props) => {
     return (
         <div className="trainer-card">
-            <img src={trainer.photograph}/>
+            <img src={`/src/assets/${trainer.photograph}`} alt={`${trainer.name}'s photo`}/>
             <h2>{trainer.name}</h2>
-            <p>{trainer.bio}</p>
+            <p><strong>Bio: </strong>{trainer.bio}</p>
             <p><strong>Specialties: </strong>{trainer.specialtyOne}, {trainer.specialtyTwo}</p>
             <p><strong>Certification: </strong>{trainer.certification}</p>
         </div>

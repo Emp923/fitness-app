@@ -150,9 +150,18 @@ public class ExerciseProgramController {
         return exerciseDao.getExercise();
     }
 
+    @PreAuthorize("hasRole('ROLE_TRAINER')")
+    @RequestMapping(path = "/exercise/{userId}", method = RequestMethod.GET)
+    public List<Exercise> getExerciseLogByUserId(@PathVariable("userId") int userExerciseLogId) {
+        List <Exercise> exercise = exerciseDao.getExerciseLogByUserId(userExerciseLogId);
+        return exercise;
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/submit-exercise-log", method = RequestMethod.POST)
     public Exercise submitExerciseLog(@Valid @RequestBody ExerciseLogDto exerciseLogDto){
+        User currentUser = userDao.getUserByUsername(SecurityUtils.getCurrentUsername());
 
         Exercise newExerciseLog = new Exercise();
 
@@ -161,6 +170,7 @@ public class ExerciseProgramController {
         newExerciseLog.setSets(exerciseLogDto.getSets());
         newExerciseLog.setRepetitions(exerciseLogDto.getRepetitions());
         newExerciseLog.setComments(exerciseLogDto.getComments());
+        newExerciseLog.setUserId(currentUser.getId());
 
         ProgramExercise programExercise = programExerciseDao.getProgramExerciseByName(exerciseLogDto.getExerciseName());
         if(programExercise == null){

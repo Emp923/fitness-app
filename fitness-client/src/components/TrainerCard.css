@@ -1,12 +1,14 @@
 .trainer-container {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
 }
 
 .trainer-card {
-    max-width: calc(25% - 20px);
+    /*max-width: calc(25% - 20px);*/
+    width: 300px;
     background-color: white;
     border-radius: 16px;
     padding: 20px;
@@ -19,8 +21,8 @@
 }
 
 .trainer-card img {
-    width: 80%;
-    height: 150px;
+    width: 50%;
+    height: 250px;
     object-fit: cover;
     border-radius: 12px;
 }

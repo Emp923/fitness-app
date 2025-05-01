@@ -9,6 +9,8 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class JdbcUserDetailsDao implements UserDetailsDao {
@@ -17,6 +19,24 @@ public class JdbcUserDetailsDao implements UserDetailsDao {
 
     public JdbcUserDetailsDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public List<UserDetails> getUserDetails(){
+        List<UserDetails> userDetails = new ArrayList<>();
+        String sql = "SELECT user_id, preferred_name, availability, birthday, gender, restrictions, goals, comments" +
+                " FROM user_details ORDER BY preferred_name ASC";
+
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                UserDetails userDetail = mapRowToUserDetails(results);
+                userDetails.add(userDetail);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return userDetails;
     }
 
     @Override

@@ -56,6 +56,9 @@ const TrainerHomePage = () => {
   return (
     <>
       <h1>Trainer Home Page</h1>
+      <div id="trainer-nav">
+        <Link to="/trainer-home/user-details-view">Look Up User Details</Link>
+      </div>
       <div style={{ display: "flex" }}>
         <CreateProgramForm
           programName={programName}
