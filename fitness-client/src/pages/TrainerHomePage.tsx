@@ -34,6 +34,9 @@ const TrainerHomePage = () => {
 
     try {
       const res = await createProgram(formData, token);
+      if (res.id) {
+        alert('Program created successfully!');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -133,7 +136,7 @@ const CreateProgramExerciseForm = ({ token }: CreateProgramExerciseFormProps) =>
     setRepetitions(0);
   };
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     const programExercise: ProgramExercise = {
@@ -145,7 +148,10 @@ const CreateProgramExerciseForm = ({ token }: CreateProgramExerciseFormProps) =>
     };
 
     try {
-      const res = createProgramExercise(programExercise, token);
+      const res = await createProgramExercise(programExercise, token);
+      if (res.id) {
+        alert('Program Exercise created successfully!');
+      }
       resetForm();
     } catch (error) {
       console.log(error);
