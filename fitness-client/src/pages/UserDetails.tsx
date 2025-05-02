@@ -3,8 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import "./UserDetailsPage.css";
 import { userDetailsSubmit } from "../services/userDetailsService";
 import { formatDate } from "../utils.ts";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 const UserDetails = () => {
+    const { token } = JSON.parse((useSelector((state:RootState) => state.auth)).userInfo || "");
     const [preferredName, setPreferredName] = useState<string>("");
     const [availability, setAvailability] = useState<string[]>([]);
     const [birthday, setBirthday] = useState<Date | null>(null);
@@ -18,7 +21,6 @@ const UserDetails = () => {
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         const formData = {
-            userId: 6,
             preferredName,
             availability: availability.toString(),
             birthday: formatDate(birthday?.toString()),
@@ -30,10 +32,11 @@ const UserDetails = () => {
         console.log(formData.birthday);
         try {
             const res = await userDetailsSubmit(
-                formData
+                formData, token
             );
-            if (res.status === 201) {
-                navigate("/login");
+            if (res.userId) {
+                alert("User Details Submitted");
+                navigate("/")
             }
         } catch (error) {
             console.log(error);
