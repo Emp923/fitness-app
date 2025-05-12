@@ -79,6 +79,16 @@ export const assignProgramExerciseToProgram = async (programId: number, programE
   return res.json();
 };
 
+export const assignProgramToUser = async (programId: number, userId: number, token: string) => {
+  const res = await fetch(`/api/programs/${programId}/assign-to-user/${userId}`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  });
+  return res.json();
+};
+
 export const getExerciseLog = async (token: string): Promise<ExerciseLog[]> => {
   const res = await fetch("/api/programs/exercise", {
     method: "GET",
