@@ -103,6 +103,17 @@ public class ExerciseProgramController {
         return programDao.getProgramsByUserId(currentUser.getId());
     }
 
+    @RequestMapping(path = "/my-exercises", method = RequestMethod.GET)
+    public List<ProgramExerciseDto> viewUserExercises() {
+        User currentUser = userDao.getUserByUsername(SecurityUtils.getCurrentUsername());
+
+        if (currentUser == null) {
+            LOGGER.debug("Unknown username");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown username");
+        }
+        return this.programExerciseDao.getProgramExercisesByUserId(currentUser.getId());
+    }
+
     @PreAuthorize("hasRole('ROLE_TRAINER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/{programId}/assign-to-user/{userId}", method = RequestMethod.POST)

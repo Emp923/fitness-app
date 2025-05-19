@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import {
-    getProgramExercises, getExerciseLog, ExerciseLog,
-    ProgramExercise
+    ProgramExercise,
+    getMyPrograms,
+    ProgramBasic,
+    getMyExercises,
 } from "../services/exerciseProgramService";
 import ViewProgramCard from "../components/ViewProgramCard";
 
@@ -20,17 +22,17 @@ const daysOfWeek = [
 
 const ExerciseProgramPage = () => {
     const { token } = JSON.parse((useSelector((state:RootState) => state.auth)).userInfo || "");
-    const [programs, setPrograms] = useState<ProgramExercise[]>([]);
-    const [exercises, setExercises] = useState<ExerciseLog[]>([]);
+    const [programs, setPrograms] = useState<ProgramBasic[]>([]);
+    const [exercises, setExercises] = useState<ProgramExercise[]>([]);
     const [selectedDay, setSelectedDay] = useState<string>("All");
 
     useEffect(() => {
         const callApi = async (token: string) => {
             try{
-                const programs = await getProgramExercises(token);
+                const programs = await getMyPrograms(token);
                 console.log(programs);
                 setPrograms(programs);
-                const exercises = await getExerciseLog(token);
+                const exercises = await getMyExercises(token);
                 setExercises(exercises);
             }catch(error){
                 console.log(error);
@@ -40,14 +42,21 @@ const ExerciseProgramPage = () => {
         callApi(token);
     },[token]);
 
-    const filteredPrograms = selectedDay === "All" 
-        ? programs : programs.filter((exercise) =>
+    const filteredExercises = selectedDay === "All" 
+        ? exercises : exercises.filter((exercise) =>
             exercise.dayOfTheWeek.toLowerCase().includes(selectedDay.toLowerCase())
     );
 
     return (
         <>
             <h1>My Programs</h1>
+            <ul>
+                {programs.map(program => (
+                    <li key={program.id}>
+                        {program.name}
+                    </li>
+                ))}
+            </ul>
             <div>
                 <label htmlFor="dayFilter"><strong>Filter by Day:</strong></label>
                 <select
@@ -61,7 +70,7 @@ const ExerciseProgramPage = () => {
                 </select>
             </div>
             <div className="program-container">
-                {filteredPrograms.map((programExercise: ProgramExercise) => (
+                {filteredExercises.map((programExercise: ProgramExercise) => (
                     <ViewProgramCard key={programExercise.id} programExercise={programExercise}/>
                 ))}
             </div>

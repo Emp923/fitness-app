@@ -128,3 +128,19 @@ export const submitExerciseLog = async (exerciseSubmit: ExerciseLog, token: stri
     });
     return res.json();
 };
+
+export const getMyPrograms = async (token: string): Promise<ProgramBasic[]> => {
+  const res = await fetch("/api/programs/my-programs", {
+    method: "GET",
+    headers: {"Authorization": `Bearer ${token}`}
+  });
+  return res.json();
+};
+
+export const getMyExercises = async (token: string): Promise<ProgramExercise[]> => {
+  const res = await fetch("/api/programs/my-exercises", {
+    method: "GET",
+    headers: {"Authorization": `Bearer ${token}`}
+  });
+  return res.json();
+};
