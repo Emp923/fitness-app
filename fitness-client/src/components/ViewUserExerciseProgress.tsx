@@ -70,6 +70,7 @@ const ViewUserExerciseProgress = ({ userDetails }: ViewUserExerciseProgressProps
                                 <p><strong>{exercise.exerciseName}:</strong></p>
                                 <p><strong>Sets: </strong>{exercise.sets}</p>
                                 <p><strong>Repetitions: </strong>{exercise.repetitions}</p>
+                                <p><strong>Resistance: </strong>{exercise.resistance}</p>
                                 {exercise.comments && (
                                     <div><em>User Comment:</em> {exercise.comments}</div>
                                 )}
