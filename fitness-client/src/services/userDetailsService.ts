@@ -33,6 +33,16 @@ export const getUserDetails = async (token: string): Promise<UserDetails[]> => {
   return res.json();
 };
 
+export const getMyUserDetails = async (token: string): Promise<UserDetails> => {
+  const res = await fetch("/api/user-details/my-details", {
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    },
+  });
+  return res.json();
+};
+
 export const getUserDetailsByUserId = async (userId: number, token: string): Promise<UserDetails> => {
   const res = await fetch(`/api/user-details/${userId}`, {
     method: "GET",

@@ -42,6 +42,13 @@ public class UserDetailsController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping(path = "/my-details", method = RequestMethod.GET)
+    public UserDetails getMyUserDetails(){
+        User currentUser = userDao.getUserByUsername(SecurityUtils.getCurrentUsername());
+        return getUserDetailsById(currentUser.getId());
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "", method = RequestMethod.POST)
     public UserDetails createUserDetails(@Valid @RequestBody UserDetails userDetails) {
