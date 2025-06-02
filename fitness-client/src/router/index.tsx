@@ -1,4 +1,4 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
+import { createBrowserRouter, createRoutesFromElements, Route, Navigate } from "react-router-dom";
 import App from "../App";
 import HomePage from "../pages/HomePage";
 import PrivateRoute from "../components/PrivateRoute";
@@ -16,16 +16,18 @@ import ProgramPage from "../pages/ProgramPage";
 import ExerciseProgramPage from "../pages/ExerciseProgramPage";
 import MyExerciseInstructionPage from "../pages/MyExerciseInstructionPage";
 import TrainersViewUsersPage from "../pages/TrainersViewUsersPage";
+import LandingPage from "../pages/LandingPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="" element={<App />}>
+      <Route index element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/logout" element={<LogoutPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/search" element={<SearchExercises />} />
       <Route path="" element={<PrivateRoute />}>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/user-details" element={<UserDetails />}/>
         <Route path="/program/:id" element={<ProgramPage />} />
         <Route path="/admin" element={<AdminRoute />}>

@@ -4,7 +4,7 @@ import { RouterProvider } from "react-router-dom";
 import router from "./router";
 import { Provider } from "react-redux";
 import store from "./store";
-//import "./UserDetailsPage.css";
+import "./globalStyle.css";
 
 
 createRoot(document.getElementById("root")!).render(
