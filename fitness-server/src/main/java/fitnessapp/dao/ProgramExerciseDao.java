@@ -20,4 +20,6 @@ public interface ProgramExerciseDao {
     void assignProgramExerciseToProgram(int programExerciseId, int programId);
 
     boolean isProgramExerciseAssignedToProgram(int programExerciseId, int programId);
+
+    List<ProgramExerciseDto> getProgramExercisesByUserId(int userId);
 }

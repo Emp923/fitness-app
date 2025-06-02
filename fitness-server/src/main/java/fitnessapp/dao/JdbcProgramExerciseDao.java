@@ -146,6 +146,40 @@ public class JdbcProgramExerciseDao implements ProgramExerciseDao {
         }
     }
 
+    @Override
+    public List<ProgramExerciseDto> getProgramExercisesByUserId(int userId) {
+        String sql = "SELECT program_exercises.id, program_exercises.day_of_the_week, program_exercises.exercise_name, " +
+                "program_exercises.resistance, program_exercises.sets, program_exercises.repetitions " +
+                "FROM program_exercises " +
+                "JOIN programs_program_exercises ON program_exercises.id = programs_program_exercises.program_exercise_id " +
+                "JOIN programs ON programs_program_exercises.program_id = programs.id " +
+                "JOIN programs_users ON programs.id = programs_users.program_id " +
+                "WHERE programs_users.user_id = ?";
+
+        List<ProgramExerciseDto> programExercises = new ArrayList<>();
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+            while (results.next()) {
+                ProgramExerciseDto programExercise = mapRowToProgramExerciseDto(results);
+                programExercises.add(programExercise);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return programExercises;
+    }
+
+    private ProgramExerciseDto mapRowToProgramExerciseDto(SqlRowSet rs) {
+        ProgramExerciseDto programExercise = new ProgramExerciseDto();
+        programExercise.setId(rs.getInt("id"));
+        programExercise.setDayOfTheWeek(rs.getString("day_of_the_week"));
+        programExercise.setExerciseName(rs.getString("exercise_name"));
+        programExercise.setResistance(rs.getInt("resistance"));
+        programExercise.setSets(rs.getInt("sets"));
+        programExercise.setRepetitions(rs.getInt("repetitions"));
+        return programExercise;
+    }
+
     private ProgramExercise mapRowToProgram(SqlRowSet rs) {
         ProgramExercise program = new ProgramExercise();
         program.setId(rs.getInt("id"));

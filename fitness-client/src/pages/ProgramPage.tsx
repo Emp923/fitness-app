@@ -9,6 +9,7 @@ import {
   getProgramDetails,
   getProgramExercises
 } from "../services/exerciseProgramService";
+import SelectUserToAssign from "../components/SelectUserToAssign";
 
 const ProgramPage = () => {
   const { token } = JSON.parse((useSelector((state:RootState) => state.auth)).userInfo || "");
@@ -84,7 +85,7 @@ const ProgramPage = () => {
             </div>
           ))}
         </div>
-        <div>
+        <div style={{ marginRight: 20 }}>
           <h2>Assign Exercise to this Program</h2>
           <form action="#" onSubmit={handleFormSubmit}>
             <div className="form-group">
@@ -101,6 +102,7 @@ const ProgramPage = () => {
             <button type="submit">Assign this Exercise</button>
           </form>
         </div>
+        <SelectUserToAssign programId={Number(id)} token={token} />
       </div>
     </div>
   );
