@@ -1,17 +1,17 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
+import { useSelector } from "react-redux";
+import { RootState } from "./store";
 
 const App = () => {
+  const rawUserInfo = useSelector((state: RootState) => state.auth.userInfo);
+  const userObj = rawUserInfo ? JSON.parse(rawUserInfo) : null;
+  const role = userObj?.user.authorities[0];
+  console.log(userObj);
+
   return (
     <div id="fitness-app">
-      {/* <div id="nav">
-        <Link to="/">Home</Link>&nbsp;|&nbsp;
-        <Link to="/logout">Logout</Link>&nbsp;|&nbsp;
-        <Link to="/program">View My Programs</Link>&nbsp;|&nbsp;
-        <Link to="/trainers">View Trainers</Link>&nbsp;|&nbsp;
-        <Link to="/trainer-home">Trainer Home</Link>
-      </div> */}
-      <NavBar role={"ROLE_TRAINER"} />
+      <NavBar role={role?.name} username={userObj?.user.username} />
       <Outlet />
     </div>
   );

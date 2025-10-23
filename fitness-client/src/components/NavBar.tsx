@@ -1,15 +1,11 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
 
 type NarbarProps = {
   role?: string;
+  username?: string;
 };
 
-const NavBar = ({ role }: NarbarProps) => {
-  //const userObj = JSON.parse((useSelector((state: RootState) => state.auth)).userInfo || "");
-  const rawUserInfo = useSelector((state: RootState) => state.auth.userInfo);
-  const userObj = rawUserInfo ? JSON.parse(rawUserInfo) : null;
+const NavBar = ({ role, username }: NarbarProps) => {
 
   return (
     <div id="nav">
@@ -18,9 +14,23 @@ const NavBar = ({ role }: NarbarProps) => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/program">View My Programs</Link></li>
         <li><Link to="/trainers">View Trainers</Link></li>
-        <li>{role === "ROLE_TRAINER" && <Link to="/trainer-home">Trainer Home</Link>}</li>
+        {role === "ROLE_TRAINER" &&
+          <li>
+            <Link to="/trainer-home">Trainer Home</Link>
+          </li>
+        }
+        {role === "ROLE_ADMIN" &&
+          <li>
+            <Link to="/admin">Admin Dashboard</Link>
+          </li>
+        }
+        {username &&
+          <li>
+            Current User: {username}
+          </li>
+        }
         <li className="signin">
-          {userObj ? (
+          {role ? (
             <Link to="/logout">Logout</Link>
           ) : (
             <Link to="/login">Login</Link>
